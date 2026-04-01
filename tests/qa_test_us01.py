@@ -129,7 +129,8 @@ def test_data_schema():
     }
     
     # 检查是否有测试数据文件
-    data_dir = BACKEND_DIR.parent / "data"
+    # data 目录在 backend 目录下（爬虫运行时的相对路径）
+    data_dir = BACKEND_DIR / "data"
     if not data_dir.exists():
         log_test("测试数据存在", False, "data 目录不存在，无法验证数据结构")
         return False
@@ -197,7 +198,8 @@ def test_data_validity():
     print("测试 3: 数据合理性验证")
     print("=" * 60)
     
-    data_dir = BACKEND_DIR.parent / "data"
+    # data 目录在 backend 目录下（爬虫运行时的相对路径）
+    data_dir = BACKEND_DIR / "data"
     if not data_dir.exists():
         log_test("数据目录", False, "data 目录不存在")
         return False
@@ -279,7 +281,8 @@ def test_sqlite_database():
     print("测试 4: SQLite 数据库验证")
     print("=" * 60)
     
-    db_path = BACKEND_DIR.parent / "data" / "products.db"
+    # db 文件在 backend/data 目录下
+    db_path = BACKEND_DIR / "data" / "products.db"
     
     if not db_path.exists():
         log_test("数据库文件", False, "products.db 不存在")
