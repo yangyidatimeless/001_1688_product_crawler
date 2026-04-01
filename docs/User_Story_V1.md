@@ -20,12 +20,12 @@
 
 ## 🎯 核心功能 (MVP)
 
-- [x] **US_01**: 基础商品爬取 | 状态：`[DONE]` | 负责人：允灿 | 契约：`/specs/US_01_Crawler_API.json`
-- [x] **US_02**: 反爬策略实现 | 状态：`[DONE]` | 负责人：允灿 | 契约：`/specs/US_02_AntiScrape.json`
-- [ ] **US_03**: 数据存储与去重 | 状态：`[DOING]` | 负责人：允灿 | 契约：`/specs/US_03_DataStorage.json` | 🐛 BUG_US03_001
-- [ ] **US_04**: 配置管理 | 状态：`[TODO]` | 负责人：允灿 | 契约：`/specs/US_04_Config.json`
-- [ ] **US_05**: 日志与异常处理 | 状态：`[TODO]` | 负责人：允灿 | 契约：`/specs/US_05_Logging.json`
-- [ ] **US_06**: 数据导出 | 状态：`[TODO]` | 负责人：允灿 | 契约：`/specs/US_06_Export.json`
+- [x] **US_01**: 基础商品爬取 | 状态：`[DONE]` | 负责人：允灿 | 契约：`/specs/US_01_Crawler_API.json` | QA: ✅ 通过
+- [x] **US_02**: 反爬策略实现 | 状态：`[DONE]` | 负责人：允灿 | 契约：`/specs/US_02_AntiScrape.json` | 自测：✅ 通过
+- [x] **US_03**: 数据存储与去重 | 状态：`[DONE]` | 负责人：允灿 | 契约：`/specs/US_03_DataStorage.json` | QA: ✅ 6/6 通过 | BUG_US03_001: ✅ 已关闭
+- [x] **US_04**: 配置管理 | 状态：`[DONE]` | 负责人：允灿 | 契约：`/specs/US_04_Config.json` | QA: ✅ 7/7 通过
+- [x] **US_05**: 日志与异常处理 | 状态：`[DONE]` | 负责人：允灿 | 契约：`/specs/US_05_Logging.json` | QA: ✅ 7/7 通过
+- [ ] **US_06**: 数据导出 | 状态：`[DOING]` | 负责人：允灿 | 契约：`/specs/US_06_Export.json`
 
 ---
 
@@ -36,11 +36,11 @@
 | 需求讨论 | ✅ 已完成 | PRD V1.0 已生成 |
 | US_01 基础爬取 | ✅ 已完成 | Day 1: 项目框架 + 基础爬取 |
 | US_02 反爬策略 | ✅ 已完成 | Day 2: UA 轮换 + 频率控制 + 代理池 + 验证码检测 |
-| US_03 数据存储 | ⚠️ Bug 修复中 | Day 2-3: 去重逻辑 + is_latest 标记 + SQLite 索引优化 | 🐛 BUG_US03_001: 缺少 JSONL 备份 |
-| US_04 配置管理 | ⏳ 待开始 | Day 4 |
-| US_05 日志系统 | ⏳ 待开始 | Day 3 |
+| US_03 数据存储 | ✅ 已完成 | Day 2-3: 去重逻辑 + is_latest 标记 + SQLite 索引优化 | QA: 6/6 通过，BUG_US03_001 已关闭 |
+| US_04 配置管理 | ✅ 已完成 | Day 4: 配置文件 + ConfigManager 模块 + 命令行覆盖 | QA: 7/7 通过 |
+| US_05 日志系统 | ✅ 已完成 | Day 5: 日志管理器 + 重试处理器 + 异常处理 | QA: 7/7 通过 |
 | US_06 数据导出 | ⏳ 待开始 | Day 5 |
-| QA 测试 | ⏳ 待开始 | Day 6 介入 |
+| QA 测试 | ⏳ US_06 待测试 | US_01/03/04/05 已完成 |
 | 项目结项 | ⏳ 待开始 | - |
 
 ---
@@ -57,4 +57,4 @@
 
 ---
 
-*最后更新：2026-04-01 20:20 UTC*
+*最后更新：2026-04-01 20:42 UTC*

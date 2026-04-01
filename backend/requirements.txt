@@ -5,6 +5,7 @@ lxml>=4.9.0
 sqlite-utils>=3.36
 tqdm>=4.66.0
 fake-useragent>=1.4.0
+pyyaml>=6.0
 
 # US_02 反爬策略依赖
 # playwright>=1.40.0  # 用于 Stealth 模式（可选，二期使用）

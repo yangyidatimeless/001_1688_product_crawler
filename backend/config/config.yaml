@@ -1,0 +1,32 @@
+# 1688 商品爬虫 - 配置文件
+# US_04: 配置管理
+
+# 爬虫设置
+crawler:
+  keywords:
+    - 拖把
+    - 家居用品
+    - 收纳盒
+  limit: 50
+  preview_mode: false
+  preview_limit: 5
+
+# 反爬策略设置
+anti_scrape:
+  use_proxy: true
+  proxy_source: free
+  request_delay_min: 2
+  request_delay_max: 5
+  user_agent_count: 5
+
+# 存储设置
+storage:
+  sqlite_enabled: true
+  jsonl_enabled: true
+  data_dir: ./data/
+
+# 日志设置
+logging:
+  level: INFO
+  file_enabled: true
+  console_enabled: true
