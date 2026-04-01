@@ -25,7 +25,7 @@
 - [ ] **US_03**: 数据存储与去重 | 状态：`[TODO]` | 负责人：允灿 | 契约：`/specs/US_03_DataStorage.json`
 - [ ] **US_04**: 配置管理 | 状态：`[TODO]` | 负责人：允灿 | 契约：`/specs/US_04_Config.json`
 - [ ] **US_05**: 日志与异常处理 | 状态：`[TODO]` | 负责人：允灿 | 契约：`/specs/US_05_Logging.json`
-- [ ] **US_06**: 数据导出 | 状态：`[TODO]` | 负责人：允灿 | 契约：`/specs/US_06_Export.json`
+- [ ] **US_06**: 数据导出 | 状态：`[DOING]` | 负责人：允灿 | 契约：`/specs/US_06_Export.json`
 
 ---
 
