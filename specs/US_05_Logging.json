@@ -1,0 +1,65 @@
+{
+  "us_id": "US_05",
+  "us_title": "日志与异常处理",
+  "version": "1.0",
+  "created_at": "2026-04-01T19:12:00Z",
+  "description": "完善的日志记录和异常处理，快速定位问题",
+  "logging_config": {
+    "log_file": {
+      "pattern": "./logs/crawler_{date}.log",
+      "rotation": "daily",
+      "encoding": "utf-8"
+    },
+    "log_levels": {
+      "DEBUG": "详细调试信息，用于开发",
+      "INFO": "正常流程信息，如开始抓取、已完成数量",
+      "WARNING": "可恢复异常，如代理失败、跳过商品",
+      "ERROR": "严重错误，如网络中断、解析失败"
+    },
+    "log_format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    "console_output": true,
+    "file_output": true
+  },
+  "exception_handling": {
+    "network_error": {
+      "retry_count": 3,
+      "retry_delay_seconds": 5,
+      "action": "retry_with_backoff",
+      "log_level": "ERROR"
+    },
+    "parse_error": {
+      "action": "log_and_skip",
+      "log_level": "ERROR",
+      "include_details": ["url", "html_snippet", "error_message"]
+    },
+    "captcha_detected": {
+      "action": "log_and_pause",
+      "log_level": "WARNING",
+      "message": "Captcha detected, consider using proxy or reducing frequency"
+    },
+    "database_error": {
+      "action": "log_and_exit",
+      "log_level": "ERROR",
+      "cleanup": "close_connections"
+    }
+  },
+  "progress_tracking": {
+    "library": "tqdm",
+    "display": "command_line",
+    "metrics": {
+      "total": "Total products to scrape",
+      "current": "Current product index",
+      "success_count": "Successfully scraped",
+      "skip_count": "Skipped (duplicate or error)",
+      "eta": "Estimated time remaining"
+    }
+  },
+  "acceptance_criteria": [
+    "独立日志文件（按日期命名）",
+    "日志包含 INFO、WARNING、ERROR 级别",
+    "网络异常时自动重试（最多 3 次）",
+    "页面结构变化时记录详细错误信息",
+    "日志输出到文件同时也在控制台显示",
+    "使用 tqdm 显示实时进度条"
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "us_id": "US_03",
+  "us_title": "数据存储与去重",
+  "version": "1.0",
+  "created_at": "2026-04-01T19:12:00Z",
+  "description": "自动去重并保留历史版本，支持趋势分析",
+  "database_schema": {
+    "sqlite": {
+      "database_path": "./data/products.db",
+      "table_name": "products",
+      "columns": {
+        "id": {"type": "INTEGER", "constraint": "PRIMARY KEY AUTOINCREMENT"},
+        "product_id": {"type": "TEXT", "constraint": "NOT NULL"},
+        "title": {"type": "TEXT", "constraint": "NOT NULL"},
+        "price_min": {"type": "REAL", "constraint": "NOT NULL"},
+        "price_max": {"type": "REAL", "constraint": "NOT NULL"},
+        "sales": {"type": "INTEGER", "constraint": "NOT NULL"},
+        "supplier_name": {"type": "TEXT", "constraint": "NOT NULL"},
+        "supplier_level": {"type": "TEXT", "constraint": "NOT NULL"},
+        "product_url": {"type": "TEXT", "constraint": "NOT NULL"},
+        "main_image_url": {"type": "TEXT", "constraint": "NOT NULL"},
+        "thumbnail_urls": {"type": "TEXT", "constraint": "NOT NULL"},
+        "collected_at": {"type": "DATETIME", "constraint": "NOT NULL"},
+        "is_latest": {"type": "BOOLEAN", "constraint": "DEFAULT 1"},
+        "created_at": {"type": "DATETIME", "constraint": "DEFAULT CURRENT_TIMESTAMP"},
+        "updated_at": {"type": "DATETIME", "constraint": "DEFAULT CURRENT_TIMESTAMP"}
+      },
+      "unique_constraint": {
+        "name": "unique_product_collection",
+        "columns": ["product_id", "collected_at"]
+      },
+      "indexes": [
+        {"name": "idx_product_id", "columns": ["product_id"]},
+        {"name": "idx_is_latest", "columns": ["is_latest"]},
+        {"name": "idx_collected_at", "columns": ["collected_at"]}
+      ]
+    }
+  },
+  "deduplication_logic": {
+    "within_task": {
+      "strategy": "product_id_set",
+      "action": "skip_if_exists"
+    },
+    "cross_task": {
+      "strategy": "keep_history",
+      "action": "insert_new_record"
+    },
+    "is_latest_update": {
+      "trigger": "same_product_id_exists",
+      "action": "set_previous_is_latest_to_0"
+    }
+  },
+  "jsonl_backup": {
+    "enabled": true,
+    "file_pattern": "./data/products_{keyword}_{date}.jsonl",
+    "encoding": "utf-8",
+    "format": "one_json_per_line"
+  },
+  "query_examples": {
+    "get_latest_products": "SELECT * FROM products WHERE is_latest = 1",
+    "get_product_history": "SELECT * FROM products WHERE product_id = ? ORDER BY collected_at DESC",
+    "get_by_keyword": "SELECT * FROM products WHERE title LIKE ? AND is_latest = 1"
+  },
+  "acceptance_criteria": [
+    "SQLite 数据库包含 product_id + collected_at 联合唯一键",
+    "单次任务内按商品 ID 去重",
+    "跨任务保留历史记录，不覆盖旧数据",
+    "每条记录包含 is_latest 标记字段",
+    "同步写入 JSONL 文件作为备份",
+    "支持查询最新数据（WHERE is_latest = 1）"
+  ]
+}

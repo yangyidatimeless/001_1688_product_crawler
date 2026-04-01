@@ -1,0 +1,70 @@
+{
+  "us_id": "US_01",
+  "us_title": "基础商品爬取",
+  "version": "1.0",
+  "created_at": "2026-04-01T19:12:00Z",
+  "description": "输入关键词后能自动抓取 1688 商品列表",
+  "api_contract": {
+    "command_interface": {
+      "type": "CLI",
+      "entry_point": "python crawler.py",
+      "arguments": {
+        "--keyword": {
+          "type": "string",
+          "required": true,
+          "description": "搜索关键词，如'拖把'"
+        },
+        "--limit": {
+          "type": "integer",
+          "required": false,
+          "default": 50,
+          "description": "抓取数量上限"
+        },
+        "--preview": {
+          "type": "boolean",
+          "required": false,
+          "default": false,
+          "description": "预览模式，只抓取前 5 条"
+        },
+        "--output": {
+          "type": "string",
+          "required": false,
+          "default": "./data/",
+          "description": "输出目录路径"
+        }
+      }
+    },
+    "data_schema": {
+      "product_record": {
+        "product_id": {"type": "string", "required": true},
+        "title": {"type": "string", "required": true},
+        "price_min": {"type": "number", "required": true},
+        "price_max": {"type": "number", "required": true},
+        "sales": {"type": "number", "required": true},
+        "supplier_name": {"type": "string", "required": true},
+        "supplier_level": {"type": "string", "required": true},
+        "product_url": {"type": "string", "required": true},
+        "main_image_url": {"type": "string", "required": true},
+        "thumbnail_urls": {"type": "array", "items": {"type": "string"}, "required": true},
+        "collected_at": {"type": "datetime", "required": true}
+      }
+    },
+    "output_formats": {
+      "sqlite": {
+        "database": "./data/products.db",
+        "table": "products",
+        "primary_key": ["product_id", "collected_at"]
+      },
+      "jsonl": {
+        "file": "./data/products_{keyword}_{date}.jsonl",
+        "encoding": "utf-8"
+      }
+    }
+  },
+  "acceptance_criteria": [
+    "支持命令行输入关键词和抓取数量",
+    "成功抓取 10 个必填字段",
+    "数据保存到 SQLite 和 JSONL",
+    "命令行显示实时进度条"
+  ]
+}

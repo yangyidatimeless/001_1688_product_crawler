@@ -1,0 +1,60 @@
+{
+  "us_id": "US_04",
+  "us_title": "配置管理",
+  "version": "1.0",
+  "created_at": "2026-04-01T19:12:00Z",
+  "description": "通过配置文件和命令行参数自定义爬取行为",
+  "config_file": {
+    "path": "./config.yaml",
+    "format": "YAML",
+    "schema": {
+      "crawler": {
+        "keywords": {"type": "array", "items": {"type": "string"}, "example": ["拖把", "家居用品", "收纳盒"]},
+        "limit": {"type": "integer", "default": 50},
+        "preview_mode": {"type": "boolean", "default": false},
+        "preview_limit": {"type": "integer", "default": 5}
+      },
+      "anti_scrape": {
+        "use_proxy": {"type": "boolean", "default": true},
+        "proxy_source": {"type": "string", "default": "free"},
+        "request_delay_min": {"type": "number", "default": 2},
+        "request_delay_max": {"type": "number", "default": 5},
+        "user_agent_count": {"type": "integer", "default": 5}
+      },
+      "storage": {
+        "sqlite_enabled": {"type": "boolean", "default": true},
+        "jsonl_enabled": {"type": "boolean", "default": true},
+        "data_dir": {"type": "string", "default": "./data/"}
+      },
+      "logging": {
+        "level": {"type": "string", "default": "INFO", "enum": ["DEBUG", "INFO", "WARNING", "ERROR"]},
+        "file_enabled": {"type": "boolean", "default": true},
+        "console_enabled": {"type": "boolean", "default": true}
+      }
+    }
+  },
+  "cli_override": {
+    "priority": "CLI arguments override config.yaml",
+    "arguments": {
+      "--keyword": {"overrides": "crawler.keywords", "type": "string"},
+      "--limit": {"overrides": "crawler.limit", "type": "integer"},
+      "--preview": {"overrides": "crawler.preview_mode", "type": "boolean"},
+      "--config": {"description": "Custom config file path", "type": "string"}
+    }
+  },
+  "default_values": {
+    "crawler.keywords": ["拖把"],
+    "crawler.limit": 50,
+    "crawler.preview_mode": false,
+    "anti_scrape.request_delay_min": 2,
+    "anti_scrape.request_delay_max": 5,
+    "storage.data_dir": "./data/"
+  },
+  "acceptance_criteria": [
+    "支持 config.yaml 配置文件",
+    "配置文件包含关键词列表、抓取数量、频率、代理设置",
+    "命令行参数可覆盖配置文件",
+    "预览模式只抓取前 5 条数据",
+    "配置文件不存在时使用默认值"
+  ]
+}

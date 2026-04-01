@@ -1,0 +1,63 @@
+{
+  "us_id": "US_06",
+  "us_title": "数据导出",
+  "version": "1.0",
+  "created_at": "2026-04-01T19:12:00Z",
+  "description": "将抓取的数据导出为 CSV 格式，方便分析",
+  "export_config": {
+    "format": "CSV",
+    "encoding": "utf-8-sig",
+    "delimiter": ",",
+    "quotechar": "\"",
+    "quoting": "QUOTE_MINIMAL"
+  },
+  "file_naming": {
+    "pattern": "products_{keyword}_{date}.csv",
+    "example": "products_拖把_2026-04-01.csv",
+    "date_format": "%Y-%m-%d"
+  },
+  "columns": {
+    "order": [
+      "product_id",
+      "title",
+      "price_min",
+      "price_max",
+      "sales",
+      "supplier_name",
+      "supplier_level",
+      "product_url",
+      "main_image_url",
+      "thumbnail_urls",
+      "collected_at",
+      "is_latest"
+    ],
+    "header_row": true
+  },
+  "data_filtering": {
+    "default_query": "SELECT * FROM products WHERE is_latest = 1",
+    "support_custom_query": true,
+    "support_date_range": true
+  },
+  "special_character_handling": {
+    "comma_in_field": "escape_with_quotes",
+    "newline_in_field": "escape_with_quotes",
+    "quote_in_field": "double_quotes",
+    "encoding_issue": "replace_with_placeholder"
+  },
+  "export_command": {
+    "cli": "python crawler.py --export --keyword \"拖把\" --output \"./exports/\"",
+    "arguments": {
+      "--export": {"type": "boolean", "description": "Enable export mode"},
+      "--keyword": {"type": "string", "description": "Filter by keyword"},
+      "--output": {"type": "string", "description": "Output directory"},
+      "--format": {"type": "string", "default": "csv", "enum": ["csv", "xlsx", "json"]}
+    }
+  },
+  "acceptance_criteria": [
+    "支持导出指定关键词的抓取数据",
+    "CSV 包含所有必填字段",
+    "CSV 文件命名包含日期和关键词",
+    "导出时自动处理特殊字符（避免 CSV 格式错误）",
+    "支持 UTF-8 编码（Excel 兼容）"
+  ]
+}

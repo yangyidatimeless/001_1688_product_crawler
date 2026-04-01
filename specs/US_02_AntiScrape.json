@@ -1,0 +1,62 @@
+{
+  "us_id": "US_02",
+  "us_title": "反爬策略实现",
+  "version": "1.0",
+  "created_at": "2026-04-01T19:12:00Z",
+  "description": "自动绕过 1688 的反爬机制，稳定持续地抓取数据",
+  "technical_spec": {
+    "user_agent_rotation": {
+      "type": "list",
+      "min_count": 5,
+      "rotation_strategy": "random_per_request",
+      "example_uas": [
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+      ]
+    },
+    "rate_limiting": {
+      "default_delay_seconds": 3,
+      "min_delay_seconds": 2,
+      "max_delay_seconds": 5,
+      "configurable": true
+    },
+    "proxy_pool": {
+      "enabled": true,
+      "source": "free_proxy_list",
+      "health_check": true,
+      "auto_switch_on_failure": true,
+      "max_retries": 3
+    },
+    "stealth_mode": {
+      "playwright_stealth": true,
+      "disable_automation_flags": true,
+      "randomize_viewport": true
+    }
+  },
+  "error_handling": {
+    "slider_captcha": {
+      "action": "log_and_skip",
+      "log_level": "WARNING",
+      "message": "Slider captcha detected, skipping product"
+    },
+    "proxy_failure": {
+      "action": "switch_next",
+      "max_retries": 3,
+      "fallback": "direct_connection"
+    },
+    "network_error": {
+      "action": "retry_with_backoff",
+      "max_retries": 3,
+      "backoff_multiplier": 2
+    }
+  },
+  "acceptance_criteria": [
+    "实现至少 5 个不同 User-Agent 轮换",
+    "请求频率可配置（默认 2-5 秒）",
+    "集成免费代理池支持",
+    "使用 Playwright Stealth 模式",
+    "遇到滑块验证时记录日志并跳过",
+    "代理失败时自动切换"
+  ]
+}
