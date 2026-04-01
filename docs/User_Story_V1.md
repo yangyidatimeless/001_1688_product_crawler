@@ -20,7 +20,7 @@
 
 ## 🎯 核心功能 (MVP)
 
-- [ ] **US_01**: 基础商品爬取 | 状态：`[TODO]` | 负责人：允灿 | 契约：`/specs/US_01_Crawler_API.json`
+- [x] **US_01**: 基础商品爬取 | 状态：`[DOING]` | 负责人：允灿 | 契约：`/specs/US_01_Crawler_API.json`
 - [ ] **US_02**: 反爬策略实现 | 状态：`[TODO]` | 负责人：允灿 | 契约：`/specs/US_02_AntiScrape.json`
 - [ ] **US_03**: 数据存储与去重 | 状态：`[TODO]` | 负责人：允灿 | 契约：`/specs/US_03_DataStorage.json`
 - [ ] **US_04**: 配置管理 | 状态：`[TODO]` | 负责人：允灿 | 契约：`/specs/US_04_Config.json`
